@@ -101,13 +101,15 @@ def merge_geolocation(fraud_df, ip_map_df):
     fraud_df = fraud_df.copy()
     ip_map_df = ip_map_df.copy()
 
-    # Convert IPs to integers
+    # Convert IPs to integers (fraud_df only — ip_map already has integers)
     fraud_df["ip_int"] = fraud_df["ip_address"].apply(ip_to_int)
-    ip_map_df["lower_int"] = ip_map_df["lower_bound_ip_address"].apply(ip_to_int)
-    ip_map_df["upper_int"] = ip_map_df["upper_bound_ip_address"].apply(ip_to_int)
+    ip_map_df["lower_int"] = ip_map_df["lower_bound_ip_address"].astype(float)
+    ip_map_df["upper_int"] = ip_map_df["upper_bound_ip_address"].astype(float)
 
     # Sort both for merge_asof
-    fraud_sorted = fraud_df.sort_values("ip_int").reset_index(drop=True)
+    fraud_df = fraud_df.dropna(subset=["ip_int"])
+    ip_map_df = ip_map_df.dropna(subset=["lower_int", "upper_int"])
+    fraud_sorted = fraud_df.sort_values("ip_int").reset_index(drop=True)    
     ip_sorted = ip_map_df.sort_values("lower_int").reset_index(drop=True)
 
     merged = pd.merge_asof(

@@ -14,7 +14,7 @@ import os
 # ── Consistent style ──────────────────────────────────────────────────────────
 sns.set_theme(style="whitegrid", palette="Set2")
 COLORS = {"legit": "#4C72B0", "fraud": "#DD8452"}
-FIG_DIR = "plots/"
+FIG_DIR = "../plots/"
 os.makedirs(FIG_DIR, exist_ok=True)
 
 
@@ -50,6 +50,7 @@ def plot_class_distribution(y, dataset_name="Dataset", label_col="class"):
                 colors=[COLORS["legit"], COLORS["fraud"]],
                 autopct="%1.2f%%", startangle=90)
     axes[1].set_title("Percentage Split")
+    plt.show()
 
     save(fig, f"class_distribution_{dataset_name.lower().replace(' ', '_')}.png")
 
@@ -82,6 +83,8 @@ def plot_numeric_distributions(df, cols, target_col, dataset_name="Dataset"):
         axes[j].set_visible(False)
 
     plt.tight_layout()
+    plt.show()
+
     save(fig, f"numeric_distributions_{dataset_name.lower().replace(' ', '_')}.png")
 
 
@@ -112,6 +115,8 @@ def plot_categorical_fraud_rate(df, cols, target_col, dataset_name="Dataset"):
                     ha="center", fontsize=9)
 
     plt.tight_layout()
+    plt.show()
+
     save(fig, f"categorical_fraud_rate_{dataset_name.lower().replace(' ', '_')}.png")
 
 
@@ -141,6 +146,8 @@ def plot_top_fraud_countries(df, country_col="country", target_col="class", top_
                 f"{bar.get_width():.1f}%", va="center", fontsize=9)
 
     plt.tight_layout()
+    plt.show()
+
     save(fig, "top_fraud_countries.png")
 
 
@@ -157,6 +164,8 @@ def plot_time_since_signup(df, target_col="class"):
     ax.set_ylabel("Hours Since Signup")
     ax.set_title("Time Since Signup vs. Fraud")
     plt.tight_layout()
+    plt.show()
+
     save(fig, "time_since_signup_vs_fraud.png")
 
 
@@ -172,6 +181,8 @@ def plot_hour_of_day(df, target_col="class"):
     ax.set_title("Fraud Rate by Hour of Day")
     ax.xaxis.set_major_locator(mticker.MultipleLocator(2))
     plt.tight_layout()
+    plt.show()
+
     save(fig, "fraud_by_hour.png")
 
 
@@ -188,6 +199,8 @@ def plot_velocity(df, target_col="class"):
         ax.set_ylabel("Transaction Count")
 
     plt.tight_layout()
+    plt.show()
+
     save(fig, "velocity_vs_fraud.png")
 
 
@@ -210,6 +223,8 @@ def plot_smote_comparison(y_before, y_after, dataset_name="Dataset"):
             ax.text(i, v + max(counts.values) * 0.01, f"{v:,}", ha="center", fontsize=11)
 
     plt.tight_layout()
+    plt.show()
+
     save(fig, f"smote_comparison_{dataset_name.lower().replace(' ', '_')}.png")
 
 
@@ -228,4 +243,6 @@ def plot_correlation_heatmap(df, dataset_name="creditcard", top_n=15):
                 center=0, linewidths=0.5, ax=ax)
     ax.set_title(f"Top {top_n} Feature Correlations — {dataset_name}", fontsize=13)
     plt.tight_layout()
+    plt.show()
+
     save(fig, f"correlation_heatmap_{dataset_name}.png")
