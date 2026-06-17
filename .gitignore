@@ -2,6 +2,8 @@
 
 data/
 raw/
+models/
 *.csv
+
 
 __pycache__/
